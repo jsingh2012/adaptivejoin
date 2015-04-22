@@ -8,9 +8,15 @@
      }
 char map[MAPSIZE];
 #define FORLOOP2(i, statement1, statement2) for(int i = 0; i < sizeof(chset)/sizeof(chset[0]); i++){\
+    if(skipcount < skiplength){\
+        skipcount++;\
+        count++;\
+        continue;\
+    }\
+    skipcount = 0;\
     statement1;\
     unsigned int mapindex = 0;\
-    if(count == limit){print_map(); exit(0);}\
+    if(count > limit){print_map(); exit(0);}\
     count++;\
     statement2;\
     mapindex = mapindex % MAPSIZE;\
@@ -20,8 +26,13 @@ unsigned int MurmurHash2 ( const void * key, int len, unsigned int seed );
 void print_map();
 int main(int argc, char* argv[]){
     int limit = 0;
-    if (argc != 2){
-        printf("Usage: ./a.out number\n");
+    int skiplength = 0;
+    unsigned int count = 0;
+    unsigned int skipcount = 0;
+    char chset[][4] = {"abc", "mnp", "xmz", "%1", "2Y", "W3", "#$", "$Q", "Qsd", "L0"};
+    char buff[32];
+    if (argc < 2){
+        printf("Usage: ./a.out number [skiplength -- optional]\n");
         return 0;
     }
     int ret = sscanf(argv[1], "%d", &limit);
@@ -30,10 +41,15 @@ int main(int argc, char* argv[]){
         printf("Please enter positive number\n");
         return 0;
     }
+    if(argc == 3){
+        ret = sscanf(argv[2], "%d", &skiplength);
+        //printf("%d %u\n", limit, limit);
+        if (ret != 1 || limit < 0){ 
+            printf("Please enter skip length should be positive\n");
+            return 0;
+        }
+    }
     memset(map,' ', sizeof(map));
-    unsigned int count = 0;
-    char chset[][4] = {"abc", "mnp", "xmz", "%1", "2Y", "W3", "#$", "$Q", "Qsd", "L0"};
-    char buff[32];
     //printf("Going to generate input for following character set\n");
     //FORLOOP(i, printf("%s\n",chset[i]))
     FORLOOP(i,\
