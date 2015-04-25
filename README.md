@@ -45,7 +45,10 @@ Testing this code:
 
     1. gcc generate_test_data.cpp MurmurHash2.cpp
     2. ./a.out 100000 > bigset.txt
-    3. ./a.out 1000000 10000 > bigset.txt
-    4. time pig -x local -p  smallset=smallset.txt -p bigset=bigset.txt join.pig
-    5. time pig -x local -p path=/home/vizury/adaptive_join/adaptivejoin -p hashmap=filter_set.txt  -p udf=udf.jar -p  smallset=smallset.txt -p bigset=bigset.txt adaptive_join.pig
+    3. ./a.out 1000000 10000 > smallset.txt
+    4. Remove last line for bigset.txt and smallset.txt. Store last line of smallset.txt in filter_set.txt 
+    5. time pig -x local -p  smallset=smallset.txt -p bigset=bigset.txt join.pig
+    6. time pig -x local -p path=/home/vizury/adaptive_join/adaptivejoin -p hashmap=filter_set.txt  -p udf=udf.jar -p  smallset=smallset.txt -p bigset=bigset.txt adaptive_join.pig
     
+Results:
+    I have seen over all 25 % reduction in run time of the code.
