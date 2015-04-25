@@ -42,3 +42,10 @@ skiplength is used to generate subset for a given set, which is defined by numbe
 7. compile.sh: It contains commands used for compiling udf.
  
 Testing this code:
+
+    1. gcc generate_test_data.cpp MurmurHash2.cpp
+    2. ./a.out 100000 > bigset.txt
+    3. ./a.out 1000000 10000 > bigset.txt
+    4. time pig -x local -p  smallset=smallset.txt -p bigset=bigset.txt join.pig
+    5. time pig -x local -p path=/home/vizury/adaptive_join/adaptivejoin -p hashmap=filter_set.txt  -p udf=udf.jar -p  smallset=smallset.txt -p bigset=bigset.txt adaptive_join.pig
+    
