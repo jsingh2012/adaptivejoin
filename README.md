@@ -51,4 +51,4 @@ Testing this code:
     6. time pig -x local -p path=/home/vizury/adaptive_join/adaptivejoin -p hashmap=filter_set.txt  -p udf=udf.jar -p  smallset=smallset.txt -p bigset=bigset.txt adaptive_join.pig
     
 Results:
-    I have seen over all 25 % reduction in run time of the code.
+    I have seen over all 25 % reduction in run time for the code.
